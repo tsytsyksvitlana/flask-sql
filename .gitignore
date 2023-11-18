@@ -1,0 +1,7 @@
+.idea
+.vs
+
+*.env
+!.env.sample
+__pycache__/
+.env.test
