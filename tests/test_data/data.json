@@ -1,0 +1,48 @@
+{
+    "students":[{"first_name": "Oleksandr", 
+                "last_name":"Kovalenko"},
+                {"first_name": "Yuliia", 
+                "last_name":"Petrenko"}, 
+                {"first_name": "Volodymyr", 
+                "last_name":"Sydorenko"},
+                {"first_name": "Iryna", 
+                "last_name":"Shevchenko"},
+                {"first_name": "Andrii", 
+                "last_name":"Tkachenko"},
+                {"first_name": "Oleksii", 
+                "last_name":"Melnyk"},
+                {"first_name": "Roman", 
+                "last_name":"Morozov"},
+                {"first_name": "Svitlana", 
+                "last_name":"Koval"}
+            ],
+    "groups": [
+        "PZ-26",
+        "YN-50",
+        "CR-44",
+        "PZ-26",
+        "YN-50",
+        "CR-44",
+        "PZ-26",
+        "YN-50"
+    ],
+    "courses":[{"name": "Math", 
+        "description": "The course includes the study of algebra and the beginnings of analysis."
+        },
+        {"name": "Math", 
+        "description": "The course includes the study of algebra and the beginnings of analysis."
+        },
+        {"name": "Math", 
+        "description": "The course includes the study of algebra and the beginnings of analysis."
+        },
+        {"name": "Physics", 
+        "description": "Master such areas of physics as mechanics, optics, electricity, molecular and quantum physics."},
+        {"name": "Physics", 
+        "description": "Master such areas of physics as mechanics, optics, electricity, molecular and quantum physics."},
+        {"name": "Physics", 
+        "description": "Master such areas of physics as mechanics, optics, electricity, molecular and quantum physics."},
+        {"name": "History", 
+        "description": "Learn about formation of Ukraine."},
+        {"name": "History", 
+        "description": "Learn about formation of Ukraine."}]
+}

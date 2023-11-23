@@ -3,6 +3,8 @@ import os
 
 from web_app.config import DB_NAME, BASE_URL, POSTGRESS_DB
 from web_app.db.utils import create_database, init_database, drop_database
+from web_app.bl.load_data import load_data_to_db
+from web_app.db.session import set_session, close_dbs
 
 import logging
 
@@ -26,6 +28,11 @@ def my_parser() -> ArgumentParser:
         '--init',
         action='store_true',
         help='Init DB'
+    )
+    parser.add_argument(
+        '--load',
+        action='store_true',
+        help='Insert Data DB'
     )
     parser.add_argument(
         'action',
@@ -70,6 +77,11 @@ def main():
 
     if args.action == 'init' or args.init:
         init_database(db_url=BASE_URL, db_name=args.db_name)
+
+    if args.load:
+        set_session()
+        load_data_to_db()
+        close_dbs()
 
 
 if __name__ == '__main__':

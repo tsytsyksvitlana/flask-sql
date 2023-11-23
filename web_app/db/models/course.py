@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
 
 from web_app.db.models import Base
+from web_app.db.models.group import Group
 
 
 class Course(Base):
@@ -9,6 +10,7 @@ class Course(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(length=30))
     description: Mapped[str] = mapped_column(String(length=200))
+    groups: Mapped['Group'] = relationship("Group", back_populates="course")
 
     def __repr__(self):
         return (f'Course(id={self.id}, '
