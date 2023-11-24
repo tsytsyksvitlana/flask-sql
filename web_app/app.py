@@ -1,11 +1,12 @@
 from flask import Flask
 from web_app.db.session import set_session, pop_session, close_dbs
+from web_app.services.crud import api_router
 import typing as t
 
 
 def create_app():
     app = Flask(__name__)
-
+    app.register_blueprint(api_router)
     app.before_request(set_session)
 
     @app.teardown_request

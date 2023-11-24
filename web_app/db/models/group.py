@@ -22,3 +22,10 @@ class Group(Base):
 
     def __repr__(self):
         return (f'Group(id={self.id}, name={self.name})')
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'student': self.student,
+            'course': self.course
+        }
