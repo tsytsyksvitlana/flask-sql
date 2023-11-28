@@ -1,7 +1,8 @@
-from flask import Flask
-from web_app.db.session import set_session, pop_session, close_dbs
-from web_app.services.crud import api_router
 import typing as t
+from flask import Flask
+
+from web_app.db.session import set_session, pop_session, close_dbs
+from web_app.routes.routers import api_router
 
 
 def create_app():
@@ -22,6 +23,7 @@ def create_app():
     return app
 
 
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True)

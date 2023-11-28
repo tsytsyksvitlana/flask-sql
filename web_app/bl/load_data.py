@@ -18,15 +18,15 @@ def load_data_to_db(json_path: str = JSON_PATH) -> None:
     groups = data["groups"]
     courses = data["courses"]
 
-    groups_res = []
+    students_res = []
     for i in range(len(students)):
         student = students[i]
         course = courses[i]
         course = Course(name=course["name"], description=course["description"])
+        group = Group(name=groups[i], course=course)
         student = Student(
-            first_name=student["first_name"], last_name=student["last_name"])
-        group = Group(name=groups[i], course=course, student=student)
-        groups_res.append(group)
-    s.users_db.add_all(groups_res)
+            first_name=student["first_name"], last_name=student["last_name"], group=group)
+        students_res.append(student)
+    s.users_db.add_all(students_res)
     s.users_db.commit()
     log.info('Data loaded successfully.')
