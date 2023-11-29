@@ -5,9 +5,12 @@ from dataclasses import dataclass, asdict
 class StudentRequest:
     first_name: str
     last_name: str
+    group_id: int | None
 
     def to_dict(self) -> dict[str]:
         data = asdict(self)
-        if not all(isinstance(item, str) for item in data.values()):
+        if not (isinstance(self.first_name, str)
+                and isinstance(self.last_name, str)
+                and isinstance(self.group_id, int)):
             raise TypeError('to_dict')
         return data
