@@ -7,7 +7,6 @@ from web_app.db.utils import drop_database, create_database, init_database
 from web_app.config import BASE_URL, POSTGRESS_DB, DB_NAME
 from web_app.db.session import close_dbs, set_session, pop_session
 from web_app.bl.load_data import load_data_to_db
-from tests.test_data.data import COURSES, GROUPS, STUDENTS
 
 
 DB_URL = f'{BASE_URL}/{POSTGRESS_DB}'
@@ -31,7 +30,7 @@ def pytest_sessionstart(session):
     print('CREATE DB')
     init_database(TEST_DB, db_name=DB_NAME)
     set_session()
-    load_data_to_db(GROUPS, COURSES, STUDENTS)
+    load_data_to_db()
     pop_session()
 
 
