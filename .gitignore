@@ -5,3 +5,4 @@
 !.env.sample
 __pycache__/
 !.env.test
+.pytest_cache

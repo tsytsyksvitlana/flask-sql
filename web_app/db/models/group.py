@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, ForeignKey, Integer
 
@@ -23,9 +23,17 @@ class Group(Base):
     def __repr__(self):
         return (f'Group(id={self.id}, name={self.name})')
 
-    def to_dict(self):
-        return {
-            "name": self.name,
-            "student": [s.to_dict() for s in self.students],
-            "course": [s.to_dict() for s in self.course]
+    def to_dict(self, exclude: set | None = None) -> dict[str, Any]:
+        if exclude is None:
+            exclude = set()
+        data = {
+            Group.id.key: self.id,
+            Group.name.key: self.name
         }
+        if 'course' not in exclude:
+            data['course'] = self.course.to_dict(
+                exclude={'groups', 'students'})
+        if 'students' not in exclude:
+            data['students'] = [
+                s.to_dict(exclude={'group', 'courses'}) for s in self.students]
+        return data

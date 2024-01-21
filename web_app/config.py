@@ -16,7 +16,6 @@ DB_NAME = os.getenv("DB_NAME")
 HOST = os.getenv("HOST")
 PORT = os.getenv("PORT")
 ENGINE = os.getenv("ENGINE")
-POSTGRESS_DB = os.getenv("POSTGRESS_DB")
 
 BASE_URL = f'{ENGINE}://{PG_USER}:{PG_PASSW}@{HOST}:{PORT}'
 POSTGRESS_DB = 'postgres'

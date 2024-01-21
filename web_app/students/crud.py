@@ -1,16 +1,9 @@
-from sqlalchemy import select, func, insert, update, delete
+from sqlalchemy import select, insert, update, delete
 
 from web_app.db.session import s
 from web_app.db.models.group import Group
 from web_app.db.models.student import Student
 from web_app.bl.models import StudentRequest
-
-
-def get_groups(students: int) -> list[Group]:
-    query = select(Group).join(Student).group_by(
-        Student.group, Group).having(func.count(Group.name) <= students)
-    groups = s.users_db.execute(query)
-    return groups
 
 
 def get_students(group_name: str) -> list[Student]:

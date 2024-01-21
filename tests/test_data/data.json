@@ -20,21 +20,20 @@
         "PZ-26",
         "YN-50",
         "CR-44",
-        "PZ-26",
-        "YN-50",
-        "CR-44",
-        "PZ-26",
-        "YN-50"
+        "KN-26",
+        "JK-50",
+        "TY-44",
+        "RE-26",
+        "LP-50"
     ],
-    "courses":[{"name": "Math", 
-        "description": "The course includes the study of algebra and the beginnings of analysis."
-        },
+    "courses":
+    [
         {"name": "Math", 
-        "description": "The course includes the study of algebra and the beginnings of analysis."
-        },
+        "description": "The course includes the study of algebra and the beginnings of analysis."},
         {"name": "Math", 
-        "description": "The course includes the study of algebra and the beginnings of analysis."
-        },
+        "description": "The course includes the study of algebra and the beginnings of analysis."},
+        {"name": "Math", 
+        "description": "The course includes the study of algebra and the beginnings of analysis."},
         {"name": "Physics", 
         "description": "Master such areas of physics as mechanics, optics, electricity, molecular and quantum physics."},
         {"name": "Physics", 
@@ -44,5 +43,8 @@
         {"name": "History", 
         "description": "Learn about formation of Ukraine."},
         {"name": "History", 
-        "description": "Learn about formation of Ukraine."}]
+        "description": "Learn about formation of Ukraine."},
+        {"name": "History", 
+        "description": "Learn about formation of Ukraine."}
+    ]
 }

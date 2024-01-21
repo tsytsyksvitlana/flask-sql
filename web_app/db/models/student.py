@@ -16,16 +16,24 @@ class Student(Base):
     last_name: Mapped[str] = mapped_column(String(length=25))
     group_id: Mapped[int] = mapped_column(ForeignKey('groups.id'))
     group: Mapped['Group'] = relationship(
-        back_populates='students', lazy='select', join_depth=1)
-    course: Mapped['Course'] = relationship(secondary='groups')
+        back_populates='students', join_depth=1)
+    courses: Mapped[list['Course']] = relationship(secondary='groups')
 
     def __repr__(self):
         return (f'Student(first_name={self.first_name}, '
                 f'last_name={self.last_name})')
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name
+    def to_dict(self, exclude: set | None = None) -> dict[str, t.Any]:
+        if exclude is None:
+            exclude = set()
+        data = {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name
         }
+        if 'group' not in exclude:
+            data['group'] = self.group.to_dict(exclude={'students', 'courses'})
+        if 'course' not in exclude:
+            data['course'] = [
+                c.to_dict(exclude={'students', 'group'}) for c in self.course]
+        return data
