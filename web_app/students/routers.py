@@ -20,29 +20,19 @@ def students() -> Response:
 @students_router.route('/student', methods=['POST'])
 def create_student() -> tuple[Response, int] | Response:
     group_id = request.args.get('group_id')
-    if group_id:
-        try:
-            request_data = request.get_json()
+    try:
+        request_data = request.get_json()
+        if group_id:
             request_data['group_id'] = group_id
-            student = StudentRequest(**(request_data))
-        except TypeError as e:
-            return Response(f'Not valid data {e}', status=422)
-        try:
-            student_id = save_student(student)
-        except TypeError as e:
-            return Response(f'Not valid data {e}', status=422)
-        return jsonify(dict(id=student_id)), 201
-    else:
-        try:
-            student = StudentRequest(**(request.get_json()))
-        except TypeError as e:
-            return Response(f'Not valid data {e}', status=422)
+        student = StudentRequest(**(request.get_json()))
+    except TypeError as e:
+        return Response(f'Not valid data {e}', status=422)
 
-        try:
-            student_id = save_student(student)
-        except TypeError as e:
-            return Response(f'Not valid data {e}', status=422)
-        return jsonify(dict(id=student_id)), 201
+    try:
+        student_id = save_student(student)
+    except TypeError as e:
+        return Response(f'Not valid data {e}', status=422)
+    return jsonify(dict(id=student_id)), 201
 
 
 @students_router.route('/student/<int:student_id>', methods=['DELETE'])
