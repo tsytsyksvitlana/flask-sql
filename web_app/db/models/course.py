@@ -19,14 +19,15 @@ class Course(Base):
     groups: Mapped[list['Group']] = relationship(back_populates='course')
     students: Mapped[list['Student']] = relationship(
         primaryjoin='Course.id == Group.course_id and Group.id == Student.group_id',
-        secondary='groups', back_populates='courses', lazy='selectin')
+        secondary='groups', back_populates='courses', viewonly=True
+    )
 
     def __repr__(self):
         return (f'Course(id={self.id}, '
                 f'name={self.name}, '
                 f'description={self.description})')
 
-    def to_dict(self):
+    def to_dict(self, exclude: set | None = None):
         if exclude is None:
             exclude = set()
         data = {
@@ -36,9 +37,13 @@ class Course(Base):
         }
 
         if 'groups' not in exclude:
-            data['groups'] = [group.to_dict(
-                exclude={'course', 'students'}) for group in self.groups]
+            data['groups'] = [
+                group.to_dict(exclude={'course', 'students'})
+                for group in self.groups
+            ]
         if 'students' not in exclude:
-            data['students'] = [group.to_dict(
-                exclude={'courses', 'groups'}) for group in self.students]
+            data['students'] = [
+                student.to_dict(exclude={'courses', 'groups'})
+                for student in self.students
+            ]
         return data

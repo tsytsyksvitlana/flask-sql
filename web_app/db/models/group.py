@@ -14,11 +14,11 @@ class Group(Base):
     __tablename__ = 'groups'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(length=5))
-    students: Mapped[list['Student']] = relationship(
-        back_populates='group', lazy='selectin')
+
+    students: Mapped[list['Student']] = relationship(back_populates='group')
+
     course_id: Mapped[int] = mapped_column(ForeignKey('courses.id'))
-    course: Mapped['Course'] = relationship(
-        back_populates='groups', lazy='select')
+    course: Mapped['Course'] = relationship(back_populates='groups')
 
     def __repr__(self):
         return (f'Group(id={self.id}, name={self.name})')

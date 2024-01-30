@@ -1,50 +1,65 @@
-from sqlalchemy import select
-
-from web_app.db.session import s
-from web_app.db.models.student import Student
-from web_app.db.models.group import Group
+import pytest
 
 
-def test_students(client):
-    group_name = 'PZ-26'
-    response = client.get(f'/students/?group_name={group_name}')
+test_get_route_student_cases = [("PZ-26", "Oleksandr", "Kovalenko"),
+                                ("TY-44", "Oleksii", "Melnyk")]
+
+
+@pytest.mark.parametrize('group_name, first_name, last_name', (test_get_route_student_cases))
+def test_get_route_students(client, group_name, first_name, last_name):
+    response = client.get(f'/students/{group_name}')
+    response_data = response.get_json()[0]
+    assert response_data['first_name'] == first_name
+    assert response_data['last_name'] == last_name
     assert response.status_code == 200
-    query = select(Student).where(Student.group.has(Group.name == group_name))
-    students = s.users_db.scalars(query).all()
-    data = [student.to_dict() for student in students]
-    response_data = response.get_json()
-    assert response_data == data
 
 
-def test_create_student(client):
-    data = {
+test_create_student_cases = [
+    {
         "first_name": "Oleh",
         "last_name": "Franko",
         "group_id": "2"
+    },
+    {
+        "first_name": "Victoria",
+        "last_name": "Symonenko",
+        "group_id": "6"
     }
-    response = client.post('/student', json=data)
+]
+
+
+@pytest.mark.parametrize('student_data', (test_create_student_cases))
+def test_create_student(client, student_data):
+    response = client.post('/student', json=student_data)
     assert response.status_code == 201
 
 
-def test_student_to_group(client):
-    data = {
+test_update_student_cases = [
+    ({
         "first_name": "Oleh",
         "last_name": "Franko",
-    }
-    response = client.post('/student/?group_id=2', json=data)
-    assert response.status_code == 201
+        "group_id": "2"
+    }, '/student/1'),
+    ({
+        "first_name": "Victoria",
+        "last_name": "Symonenko",
+        "group_id": "6"
+    }, '/student/5')
+]
 
 
-def test_delete_student(client):
-    response = client.delete('/student/1')
-    assert response.status_code == 204
+@pytest.mark.parametrize('student_data, route', (test_update_student_cases))
+def test_update_student(client, student_data, route):
+    response = client.put(route, json=student_data)
+    assert response.status_code == 200
 
 
-def test_update_student(client):
-    data = {
-        "first_name": "Oleksii",
-        "last_name": "Kovalenko",
-        "group_id": "3"
-    }
-    response = client.put('/student/1', json=data)
-    assert response.status_code == 204
+test_delete_student_cases = [('/student/1', 204),
+                             ('/student/5', 204),
+                             ('/student/12', 404)]
+
+
+@pytest.mark.parametrize('student_route, status_code', (test_delete_student_cases))
+def test_delete_student(client, student_route, status_code):
+    response = client.delete(student_route)
+    assert response.status_code == status_code

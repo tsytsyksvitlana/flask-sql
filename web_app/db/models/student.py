@@ -16,8 +16,12 @@ class Student(Base):
     last_name: Mapped[str] = mapped_column(String(length=25))
     group_id: Mapped[int] = mapped_column(ForeignKey('groups.id'))
     group: Mapped['Group'] = relationship(
-        back_populates='students', join_depth=1)
-    courses: Mapped[list['Course']] = relationship(secondary='groups')
+        back_populates='students', join_depth=1, overlaps='courses, students'
+    )
+    courses: Mapped[list['Course']] = relationship(
+        secondary='groups', back_populates='students', viewonly=True,
+        overlaps='groups, students'
+    )
 
     def __repr__(self):
         return (f'Student(first_name={self.first_name}, '
@@ -35,5 +39,5 @@ class Student(Base):
             data['group'] = self.group.to_dict(exclude={'students', 'courses'})
         if 'course' not in exclude:
             data['course'] = [
-                c.to_dict(exclude={'students', 'group'}) for c in self.course]
+                c.to_dict(exclude={'students', 'group'}) for c in self.courses]
         return data
