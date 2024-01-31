@@ -13,7 +13,7 @@ def get_students(group_name: str) -> t.Sequence[Student]:
     return students
 
 
-def save_student(student: StudentRequest) -> int | None:
+def save_student(student: StudentRequest) -> int:
     insert_student = (
         insert(Student).values(**student.to_dict()).returning(Student.id)
     )

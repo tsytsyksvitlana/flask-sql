@@ -1,3 +1,4 @@
+import typing as t
 from sqlalchemy import select, func, Sequence, insert, update
 from sqlalchemy.orm import joinedload, selectinload
 
@@ -12,7 +13,7 @@ def get_groups(
         course_id: int | None,
         student_id: int | None,
         count_students: int | None,
-) -> Sequence[Group]:
+) -> t.Sequence[Group]:
     query = (
         select(Group).options(
             selectinload(Group.course),
@@ -43,7 +44,7 @@ def get_group(group_id: int) -> Group | None:
     return groups
 
 
-def save_group(group: GroupRequest) -> int | None:
+def save_group(group: GroupRequest) -> int:
     insert_group = (
         insert(Group).values(**group.to_dict()).returning(Group.id)
     )

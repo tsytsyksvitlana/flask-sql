@@ -4,9 +4,9 @@ from flask import Flask
 
 from web_app.app import create_app
 from web_app.db.utils import drop_database, create_database, init_database
-from web_app.config import BASE_URL, POSTGRESS_DB, DB_NAME
 from web_app.db.session import close_dbs, set_session, pop_session
 from web_app.bl.load_data import load_data_to_db
+from web_app.config import BASE_URL, POSTGRESS_DB, DB_NAME
 
 
 DB_URL = f'{BASE_URL}/{POSTGRESS_DB}'

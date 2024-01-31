@@ -25,7 +25,10 @@ def load_data_to_db(json_path: str = JSON_PATH) -> None:
         course = Course(name=course["name"], description=course["description"])
         group = Group(name=groups[i], course=course)
         student = Student(
-            first_name=student["first_name"], last_name=student["last_name"], group=group)
+            first_name=student["first_name"],
+            last_name=student["last_name"],
+            group=group
+        )
         students_res.append(student)
     s.users_db.add_all(students_res)
     s.users_db.commit()

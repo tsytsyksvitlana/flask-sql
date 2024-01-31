@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, Response, request
 
 from web_app.bl.models import GroupRequest
-from web_app.api.groups.crud import get_groups, get_group, save_group, update_group_by_id
+from web_app.api.groups.crud import (
+    get_groups, get_group, save_group, update_group_by_id
+)
 
 
 groups_router = Blueprint('groups_router', __name__)
@@ -48,6 +50,6 @@ def update_group(group_id: int) -> tuple[str, int] | Response:
     except TypeError as e:
         return Response(f'Not valid data {e}', status=422)
     res = update_group_by_id(group, group_id)
-    if res == 0:
+    if not res:
         return f'Group with id={group_id} not exist', 404
     return '', 200

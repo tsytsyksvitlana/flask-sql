@@ -1,8 +1,10 @@
 import pytest
 
-test_courses_routes_status_cases = [('/course/1', 200),
-                                    ('/course/5', 200),
-                                    ('/course/32', 404)]
+test_courses_routes_status_cases = [
+    ('/course/1', 200),
+    ('/course/5', 200),
+    ('/course/32', 404)
+]
 
 
 @pytest.mark.parametrize('route, code', (test_courses_routes_status_cases))
@@ -36,11 +38,13 @@ def test_get_courses(client, route, name, description):
 test_create_course_cases = [
     {
         "name": "Biology",
-        "description": "Discover life forms on Earth, from microorganisms to complex organisms."
+        "description": "Discover life forms on Earth, from microorganisms "
+                       "to complex organisms."
     },
     {
         "name": "Computer Science",
-        "description": "Explore algorithms, data structures, and software development."
+        "description": "Explore algorithms, data structures, and software"
+                       " development."
     }
 ]
 
@@ -52,15 +56,21 @@ def test_create_course(client, course_data):
 
 
 test_update_course_cases = [
-    ({
-        "name": "Geometry",
-        "description": "Explore basics of stereometry and geometric principles."
-    }, "/course/2"),
-    ({
-        "name": "Integrated Science",
-        "description": "Explore an integrated science course that blends "
-        "physics, natural sciences, and various scientific disciplines."
-    }, "/course/4")
+    (
+        {
+            "name": "Geometry",
+            "description": "Explore basics of stereometry and geometric principles."
+        },
+        "/course/2"
+    ),
+    (
+        {
+            "name": "Integrated Science",
+            "description": "Explore an integrated science course that blends "
+                           "physics, natural sciences, and various scientific disciplines."
+        },
+        "/course/4"
+    )
 ]
 
 

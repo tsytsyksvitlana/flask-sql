@@ -1,8 +1,10 @@
 import pytest
 
 
-test_get_route_student_cases = [("PZ-26", "Oleksandr", "Kovalenko"),
-                                ("TY-44", "Oleksii", "Melnyk")]
+test_get_route_student_cases = [
+    ("PZ-26", "Oleksandr", "Kovalenko"),
+    ("TY-44", "Oleksii", "Melnyk")
+]
 
 
 @pytest.mark.parametrize('group_name, first_name, last_name', (test_get_route_student_cases))
@@ -15,16 +17,8 @@ def test_get_route_students(client, group_name, first_name, last_name):
 
 
 test_create_student_cases = [
-    {
-        "first_name": "Oleh",
-        "last_name": "Franko",
-        "group_id": "2"
-    },
-    {
-        "first_name": "Victoria",
-        "last_name": "Symonenko",
-        "group_id": "6"
-    }
+    {"first_name": "Oleh", "last_name": "Franko", "group_id": "2"},
+    {"first_name": "Victoria", "last_name": "Symonenko", "group_id": "6"}
 ]
 
 
@@ -35,16 +29,14 @@ def test_create_student(client, student_data):
 
 
 test_update_student_cases = [
-    ({
-        "first_name": "Oleh",
-        "last_name": "Franko",
-        "group_id": "2"
-    }, '/student/1'),
-    ({
-        "first_name": "Victoria",
-        "last_name": "Symonenko",
-        "group_id": "6"
-    }, '/student/5')
+    (
+        {"first_name": "Oleh", "last_name": "Franko", "group_id": "2"},
+        '/student/1'
+    ),
+    (
+        {"first_name": "Victoria", "last_name": "Symonenko", "group_id": "6"},
+        '/student/5'
+    )
 ]
 
 
@@ -54,9 +46,11 @@ def test_update_student(client, student_data, route):
     assert response.status_code == 200
 
 
-test_delete_student_cases = [('/student/1', 204),
-                             ('/student/5', 204),
-                             ('/student/12', 404)]
+test_delete_student_cases = [
+    ('/student/1', 204),
+    ('/student/5', 204),
+    ('/student/12', 404)
+]
 
 
 @pytest.mark.parametrize('student_route, status_code', (test_delete_student_cases))

@@ -28,7 +28,7 @@ def get_course(course_id: int) -> Course | None:
     return courses
 
 
-def save_course(course: CourseRequest) -> int | None:
+def save_course(course: CourseRequest) -> int:
     insert_stmt = (
         insert(Course).values(**course.to_dict()).returning(Course.id)
     )

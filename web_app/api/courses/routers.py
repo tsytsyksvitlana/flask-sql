@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, Response, request
 
-from web_app.api.courses.crud import get_courses, get_course, save_course, update_course_by_id
+from web_app.api.courses.crud import (
+    get_courses, get_course, save_course, update_course_by_id
+)
 from web_app.bl.models import CourseRequest
 
 courses_router = Blueprint('courses_router', __name__)
@@ -13,7 +15,7 @@ def get_route_courses() -> Response:
 
 
 @courses_router.route('/course/<int:course_id>', methods=['GET'])
-def get_route_course(course_id: int):
+def get_route_course(course_id: int) -> Response:
     course = get_course(course_id)
     if course is None:
         return Response(f'Course with id = {course_id} not exist.', status=404)
@@ -41,6 +43,6 @@ def update_course(course_id: int) -> tuple[str, int] | Response:
     except TypeError as e:
         return Response(f'Not valid data {e}', status=422)
     res = update_course_by_id(course, course_id)
-    if res == 0:
+    if not res:
         return f'Course with id={course_id} not exist', 404
     return '', 200
